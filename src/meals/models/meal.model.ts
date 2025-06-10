@@ -1,11 +1,13 @@
 import { Allergen } from 'src/allergens/models/allergen.models';
 import { Category } from 'src/categories/model/category.model';
+import { OrderContent } from 'src/orders/model/content.model';
 import {
     Column,
     Entity,
     JoinTable,
     ManyToMany,
     ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -25,6 +27,9 @@ export class Meal {
     @ManyToMany(() => Allergen)
     @JoinTable({ name: 'meals_allergens' })
     allergens: Allergen[];
+
+    @OneToMany(() => OrderContent, (o) => o.meal)
+    orderContent: OrderContent[];
 
     @Column({ type: 'varchar', length: 1024 })
     description: string;

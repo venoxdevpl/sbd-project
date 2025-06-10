@@ -16,6 +16,9 @@ import { AllergensModule } from './allergens/allergens.module';
 import { Allergen } from './allergens/models/allergen.models';
 import { CategoriesModule } from './categories/categories.module';
 import { Category } from './categories/model/category.model';
+import { OrdersModule } from './orders/orders.module';
+import { Order } from './orders/model/order.model';
+import { OrderContent } from './orders/model/content.model';
 
 @Module({
     imports: [
@@ -36,6 +39,8 @@ import { Category } from './categories/model/category.model';
                 Meal,
                 Allergen,
                 Category,
+                Order,
+                OrderContent,
             ],
         }),
         UsersModule,
@@ -45,6 +50,7 @@ import { Category } from './categories/model/category.model';
         MealsModule,
         AllergensModule,
         CategoriesModule,
+        OrdersModule,
     ],
 })
 export class AppModule {}
