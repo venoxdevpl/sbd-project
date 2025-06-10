@@ -140,7 +140,7 @@
 
 ## 24. Skrypt zasilający bazę danymi
 
-- [⌚] Osobny plik z insertami lub Faker.js.
+- [x] Osobny plik z insertami lub Faker.js.
 
 # Kroki przed i po testowaniu
 
