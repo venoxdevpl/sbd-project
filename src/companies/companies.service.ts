@@ -73,7 +73,7 @@ export class CompaniesService {
     public async seeder() {
         const cm = new faker.CompanyModule(fakerPL);
         const am = new faker.LocationModule(fakerPL);
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 1000; i++) {
             const company = new Company();
             company.name = cm.name();
             company.address = am.streetAddress({ useFullAddress: true });
