@@ -11,6 +11,9 @@ export class Session {
     @ManyToOne(() => User, (user) => user.sessions)
     user: User;
 
+    @Column()
+    lastActivity: number;
+
     @Column({ type: 'datetime', nullable: true })
     created_at?: Date;
 

@@ -2,13 +2,16 @@ import {
     Column,
     Entity,
     JoinColumn,
+    JoinTable,
+    ManyToMany,
     OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Role } from 'src/roles/models/Role';
-import { Session } from 'src/sessions/models/Session';
+import { Role } from 'src/roles/models/Role.model';
+import { Session } from 'src/sessions/models/Session.model';
+import { Company } from 'src/companies/models/company.model';
 
 @Entity({
     name: 'users',
@@ -26,6 +29,10 @@ export class User {
 
     @OneToMany(() => Session, (session) => session.user)
     sessions: Session[];
+
+    @ManyToMany(() => Company)
+    @JoinTable({ name: 'companies_users' })
+    companies: Company[];
 
     @Column({ type: 'varchar', length: 32 })
     email: string;
