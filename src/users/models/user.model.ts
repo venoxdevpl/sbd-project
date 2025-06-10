@@ -7,47 +7,49 @@ import {
     OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
-} from 'typeorm';
-import * as bcrypt from 'bcrypt';
-import { Role } from './../../roles/models/Role.model';
-import { Session } from './../../sessions/models/Session.model';
-import { Company } from './../../companies/models/company.model';
-import { Order } from './../../orders/model/order.model';
+} from "typeorm";
+import * as bcrypt from "bcrypt";
+import { Role } from "./../../roles/models/Role.model";
+import { Session } from "./../../sessions/models/Session.model";
+import { Company } from "./../../companies/models/company.model";
+import { Order } from "./../../orders/model/order.model";
+import { Exclude } from "class-transformer";
 
 @Entity({
-    name: 'users',
+    name: "users",
 })
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'varchar', length: 64 })
+    @Column({ type: "varchar", length: 64 })
     name: string;
 
     @OneToOne(() => Role)
-    @JoinColumn({ name: 'role_id' })
+    @JoinColumn({ name: "role_id" })
     role: Role;
 
     @OneToMany(() => Session, (session) => session.user)
     sessions: Session[];
 
     @ManyToMany(() => Company)
-    @JoinTable({ name: 'companies_users' })
+    @JoinTable({ name: "companies_users" })
     companies: Company[];
 
     @OneToMany(() => Order, (o) => o.user)
     orders: Order[];
 
-    @Column({ type: 'varchar', length: 32 })
+    @Column({ type: "varchar", length: 32 })
     email: string;
 
-    @Column({ type: 'varchar', length: 64 })
+    @Column({ type: "varchar", length: 64 })
+    @Exclude()
     password: string;
 
-    @Column({ type: 'datetime', nullable: true })
+    @Column({ type: "datetime", nullable: true })
     created_at?: Date;
 
-    @Column({ type: 'datetime', nullable: true })
+    @Column({ type: "datetime", nullable: true })
     updated_at?: Date;
 
     async setPassword(password: string) {
