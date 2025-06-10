@@ -1,4 +1,4 @@
-import { User } from 'src/users/models/user.model';
+import { User } from './../../users/models/user.model';
 import { OrderContent } from './content.model';
 import {
     Column,
@@ -7,7 +7,7 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Company } from 'src/companies/models/company.model';
+import { Company } from './../../companies/models/company.model';
 
 @Entity({
     name: 'orders',

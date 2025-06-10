@@ -1,4 +1,4 @@
-import { Meal } from 'src/meals/models/meal.model';
+import { Meal } from './../../meals/models/meal.model';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({

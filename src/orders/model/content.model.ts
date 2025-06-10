@@ -5,7 +5,7 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Order } from './order.model';
-import { Meal } from 'src/meals/models/meal.model';
+import { Meal } from './../../meals/models/meal.model';
 
 @Entity({
     name: 'orders_contents',

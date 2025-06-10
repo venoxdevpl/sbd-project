@@ -1,6 +1,6 @@
-import { Allergen } from 'src/allergens/models/allergen.models';
-import { Category } from 'src/categories/model/category.model';
-import { OrderContent } from 'src/orders/model/content.model';
+import { Allergen } from './../../allergens/models/allergen.models';
+import { Category } from './../../categories/model/category.model';
+import { OrderContent } from './../../orders/model/content.model';
 import {
     Column,
     Entity,

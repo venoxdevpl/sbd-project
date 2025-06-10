@@ -9,10 +9,10 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Role } from 'src/roles/models/Role.model';
-import { Session } from 'src/sessions/models/Session.model';
-import { Company } from 'src/companies/models/company.model';
-import { Order } from 'src/orders/model/order.model';
+import { Role } from './../../roles/models/Role.model';
+import { Session } from './../../sessions/models/Session.model';
+import { Company } from './../../companies/models/company.model';
+import { Order } from './../../orders/model/order.model';
 
 @Entity({
     name: 'users',

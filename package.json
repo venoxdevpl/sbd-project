@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "db:seed": "npx ts-node ./src/scripts/seed.ts",
+    "db:seed": "npx ts-node ./scripts/seed.ts",
     "key:gen": "cmd /c \"openssl genpkey -algorithm RSA -out private.key -pkeyopt rsa_keygen_bits:2048 && openssl rsa -in private.key -pubout -out public.key\" ",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
