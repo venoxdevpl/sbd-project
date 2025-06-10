@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Permission } from './models/Permissions.model';
 import { Repository } from 'typeorm';
+import { Role } from './models/Role.model';
 
 @Injectable()
 export class RolesService {
     constructor(
         @InjectRepository(Permission)
         private permissionRepository: Repository<Permission>,
+        @InjectRepository(Role)
+        private roleRepository: Repository<Role>,
     ) {}
 
     public async seeder() {
@@ -150,6 +153,7 @@ export class RolesService {
                 description: 'Zarządzanie użytkownikami - usuwanie.',
             },
         ];
+        const perms: Permission[] = [];
 
         for (let i = 0; i < permissions.length; i++) {
             const perm = permissions[i];
@@ -159,7 +163,13 @@ export class RolesService {
             model.key = perm.key;
             model.description = perm.description;
 
-            await this.permissionRepository.save(model);
+            perms.push(await this.permissionRepository.save(model));
         }
+
+        const rootRole = new Role();
+        rootRole.name = 'Administrator';
+        rootRole.permissions = [];
+        rootRole.permissions.push(perms.find((v) => v.key == '*.*')!);
+        await this.roleRepository.save(rootRole);
     }
 }

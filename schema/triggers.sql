@@ -1,0 +1,169 @@
+DELIMITER $$
+CREATE TRIGGER `ALLERGENS_insert_ts` BEFORE INSERT ON `allergens`
+ FOR EACH ROW BEGIN
+	SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `ALLERGENS_update_ts` BEFORE UPDATE ON `allergens`
+ FOR EACH ROW BEGIN
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `CATEGORIES_insert_ts` BEFORE INSERT ON `categories`
+ FOR EACH ROW BEGIN
+    SET NEW.updated_at = NOW();
+	SET NEW.created_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `CATEGORIES_update_ts` BEFORE UPDATE ON `categories`
+ FOR EACH ROW BEGIN
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `COMPANIES_insert_ts` BEFORE INSERT ON `companies`
+ FOR EACH ROW BEGIN
+    SET NEW.updated_at = NOW();
+	SET NEW.created_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `COMPANIES_update_ts` BEFORE UPDATE ON `companies`
+ FOR EACH ROW BEGIN
+	SET NEW.created_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `MEALS_insert_ts` BEFORE INSERT ON `meals`
+ FOR EACH ROW BEGIN
+	SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `MEALS_update_ts` BEFORE UPDATE ON `meals`
+ FOR EACH ROW BEGIN
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `ORDERS_insert_ts` BEFORE INSERT ON `orders`
+ FOR EACH ROW BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `ORDERS_update_ts` BEFORE UPDATE ON `orders`
+ FOR EACH ROW BEGIN
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `PERMISSIONS_insert_ts` BEFORE INSERT ON `permissions`
+ FOR EACH ROW BEGIN
+	SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `PERMISSIONS_update_ts` BEFORE INSERT ON `permissions`
+ FOR EACH ROW BEGIN
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `ROLES_insert_ts` BEFORE INSERT ON `roles`
+ FOR EACH ROW BEGIN
+	SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `ROLES_update_ts` BEFORE UPDATE ON `roles`
+ FOR EACH ROW BEGIN
+	SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `SESSIONS_insert_ts` BEFORE INSERT ON `sessions`
+ FOR EACH ROW BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `SESSIONS_update_ts` BEFORE UPDATE ON `sessions`
+ FOR EACH ROW BEGIN
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `USERS_insert_ts` BEFORE INSERT ON `users`
+ FOR EACH ROW BEGIN
+	SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER `USERS_update_ts` BEFORE UPDATE ON `users`
+ FOR EACH ROW BEGIN
+	SET NEW.updated_at = NOW();
+END$$
+
+DELIMITER ;
