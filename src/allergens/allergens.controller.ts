@@ -29,7 +29,7 @@ export class AllergensController {
     @Get()
     @UseGuards(SessionGuard)
     @Permissions(PermissionsFlags.ALLERGENS_READ)
-    public async findAll(@Query("count") count: number = 25, @Query("page") page: number = 1) {
+    public async findAll(@Query("count") count: number = 25, @Query("page") page: number = 0) {
         return await this.allergensService.findAll({
             count,
             page,
@@ -44,12 +44,16 @@ export class AllergensController {
     }
 
     @Patch(":id")
-    update(@Param("id") id: string, @Body() updateAllergenDto: UpdateAllergenDto) {
-        return this.allergensService.update(+id, updateAllergenDto);
+    @UseGuards(SessionGuard)
+    @Permissions(PermissionsFlags.ALLERGENS_UPDATE)
+    update(@Param("id") id: number, @Body() body: UpdateAllergenDto) {
+        return this.allergensService.update(id, body);
     }
 
     @Delete(":id")
-    remove(@Param("id") id: string) {
-        return this.allergensService.remove(+id);
+    @UseGuards(SessionGuard)
+    @Permissions(PermissionsFlags.ALLERGENS_DELETE)
+    async remove(@Param("id") id: number) {
+        return await this.allergensService.remove(id);
     }
 }

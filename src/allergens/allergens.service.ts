@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateAllergenDto } from "./dto/create-allergen.dto";
 import { UpdateAllergenDto } from "./dto/update-allergen.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -19,7 +19,10 @@ export class AllergensService {
     }
 
     public async findAll(query: { count: number; page: number }) {
-        return `This action returns all allergens`;
+        return await this.allergensRepository.findAndCount({
+            take: query.count,
+            skip: query.page,
+        });
     }
 
     public async findOne(id: number) {
@@ -30,12 +33,25 @@ export class AllergensService {
         });
     }
 
-    update(id: number, updateAllergenDto: UpdateAllergenDto) {
-        return `This action updates a #${id} allergen`;
+    public async update(id: number, data: UpdateAllergenDto) {
+        const allergen = await this.allergensRepository.findOne({ where: { id } });
+
+        if (!allergen) {
+            throw new NotFoundException("Allergen not found.");
+        }
+
+        allergen.name = data.name ?? allergen.name;
+        return await this.allergensRepository.save(allergen);
     }
 
-    remove(id: number) {
-        return `This action removes a #${id} allergen`;
+    async remove(id: number) {
+        const allergen = await this.allergensRepository.findOne({ where: { id } });
+
+        if (!allergen) {
+            throw new NotFoundException("Allergen not found.");
+        }
+
+        return await this.allergensRepository.delete(allergen);
     }
 
     public async seeder() {

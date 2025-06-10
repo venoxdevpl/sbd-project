@@ -11,5 +11,6 @@ import { UsersModule } from "./../users/users.module";
     imports: [TypeOrmModule.forFeature([Session, User, Role]), UsersModule],
     controllers: [SessionsController],
     providers: [SessionsService],
+    exports: [SessionsService],
 })
 export class SessionsModule {}
