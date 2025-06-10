@@ -14,9 +14,9 @@
 
 ## 3. Role i uprawnienia
 
-- [ ] Lista ról użytkowników.
+- [⌚] Lista ról użytkowników.
 - [ ] Opis uprawnień dla każdej roli.
-- [ ] Implementacja kontroli dostępu.
+- [✅] Implementacja kontroli dostępu.
 
 ## 4. Pozostałe elementy analizy aplikacji
 
@@ -25,8 +25,8 @@
 
 ## 5. Diagram encji (ERD)
 
-- [ ] Model encji i relacji.
-- [ ] Klucze główne i obce.
+- [✅] Model encji i relacji.
+- [✅] Klucze główne i obce.
 
 ## 6. Założenia dotyczące bazy danych
 
@@ -37,7 +37,7 @@
 
 - [ ] Procedury
 - [ ] Funkcje
-- [ ] Wyzwalacze
+- [✅] Wyzwalacze
 
 ### PS2 Kursory
 
@@ -50,16 +50,16 @@
 
 ### PS4 Pakiety _(nie dotyczy MySQL)_
 
-- [ ] Ewentualne odwzorowanie w NestJS jako moduły.
+- [⌚] Ewentualne odwzorowanie w NestJS jako moduły.
 
 ### PS5 Obsługa i propagacja wyjątków
 
 - [ ] Obsługa błędów SQL.
-- [ ] Obsługa błędów w kodzie NestJS.
+- [✅] Obsługa błędów w kodzie NestJS.
 
 ### PS6 Wyzwalacze
 
-- [ ] Min. 1 trigger w bazie danych.
+- [✅] Min. 1 trigger w bazie danych.
 
 ## 8. Skrypt tworzący bazę danych / migracje
 
@@ -67,33 +67,34 @@
 
 ## 9. Użycie ORM-u
 
-- [ ] Definicja modeli.
-- [ ] Relacje i migracje.
+- [✅] Definicja modeli.
+- [✅] Relacje i migracje.
 
 ## 10. API webowe
 
-- [ ] Endpointy REST dla encji.
-- [ ] Kontrolery i serwisy w NestJS.
+- [✅] Endpointy REST dla encji.
+- [⌚] Kontrolery i serwisy w NestJS.
 
 ## 11. Dobre praktyki
 
-- [ ] Separacja warstw.
-- [ ] Wzorce projektowe.
+- [✅] Separacja warstw.
+- [✅] Wzorce projektowe.
 
 ## 12. Role w systemie
 
-- [ ] Middleware/Guards w NestJS.
+- [✅] Middleware/Guards w NestJS.
 
 ## 13. Uwierzytelnianie użytkowników
 
-- [ ] JWT / sesje.
+- [✅] JWT / sesje.
 - [ ] Logowanie i rejestracja.
 
 ## 14. Bezpieczeństwo
 
-- [ ] Haszowanie haseł.
-- [ ] Walidacja danych wejściowych.
-- [ ] Sesja użytkownika weryfikowana na podstawie JWT z zapisem do bazy danych.
+- [✅] Haszowanie haseł.
+- [✅] Walidacja danych wejściowych.
+- [✅] SQL Prepared Statement
+- [✅] Sesja użytkownika weryfikowana na podstawie JWT z zapisem do bazy danych z możliwością uniważnienia.
 
 ## 15. Duża ilość danych
 
@@ -112,8 +113,8 @@
 
 ## 18. Indeksy
 
-- [ ] Min. 2 indeksy.
-- [ ] Opis zastosowania.
+- [✅] Min. 2 indeksy.
+- [⌚] Opis zastosowania.
 
 ## 19. Przeformułowanie zapytań
 
@@ -121,11 +122,11 @@
 
 ## 20. Prezentacja działania aplikacji
 
-- [ ] Demo lub nagranie.
+- [✅] Demo.
 
 ## 21. Przygotowanie na pytania
 
-- [ ] Znajomość decyzji projektowych.
+- [✅] Znajomość decyzji projektowych.
 
 ## 22. Paginacja
 
@@ -138,7 +139,7 @@
 
 ## 24. Skrypt zasilający bazę danymi
 
-- [ ] Osobny plik z insertami lub Faker.js.
+- [⌚] Osobny plik z insertami lub Faker.js.
 
 # Kroki przed i po testowaniu
 
