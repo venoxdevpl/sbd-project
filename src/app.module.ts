@@ -12,6 +12,8 @@ import { Session } from './sessions/models/Session.model';
 import { Company } from './companies/models/company.model';
 import { MealsModule } from './meals/meals.module';
 import { Meal } from './meals/models/meal.model';
+import { AllergensModule } from './allergens/allergens.module';
+import { Allergen } from './allergens/models/allergen.models';
 
 @Module({
     imports: [
@@ -23,13 +25,22 @@ import { Meal } from './meals/models/meal.model';
             password: process.env.DB_PASS,
             database: process.env.DB_NAME,
             synchronize: true,
-            entities: [Permission, Role, User, Session, Company, Meal],
+            entities: [
+                Permission,
+                Role,
+                User,
+                Session,
+                Company,
+                Meal,
+                Allergen,
+            ],
         }),
         UsersModule,
         CompaniesModule,
         RolesModule,
         SessionsModule,
         MealsModule,
+        AllergensModule,
     ],
 })
 export class AppModule {}
