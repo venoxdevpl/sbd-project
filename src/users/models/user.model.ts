@@ -53,4 +53,8 @@ export class User {
     async setPassword(password: string) {
         this.password = await bcrypt.hash(password, 12);
     }
+
+    async passwordChallenge(plain: string) {
+        return await bcrypt.compare(plain, this.password);
+    }
 }

@@ -1,0 +1,37 @@
+import { SetMetadata } from "@nestjs/common";
+
+export enum PermissionsFlags {
+    ALL = "*.*",
+    ALLERGENS_CREATE = "allergens.create",
+    ALLERGENS_READ = "allergens.read",
+    ALLERGENS_UPDATE = "allergens.update",
+    ALLERGENS_DELETE = "allergens.delete",
+    CATEGORIES_CREATE = "categories.create",
+    CATEGORIES_READ = "categories.read",
+    CATEGORIES_UPDATE = "categories.update",
+    CATEGORIES_DELETE = "categories.delete",
+    COMPANIES_CREATE = "companies.create",
+    COMPANIES_READ = "companies.read",
+    COMPANIES_UPDATE = "companies.update",
+    COMPANIES_DELETE = "companies.delete",
+    MEALS_CREATE = "meals.create",
+    MEALS_READ = "meals.read",
+    MEALS_UPDATE = "meals.update",
+    MEALS_DELETE = "meals.delete",
+    ORDERS_CREATE = "orders.create",
+    ORDERS_READ = "orders.read",
+    ORDERS_UPDATE = "orders.update",
+    ORDERS_DELETE = "orders.delete",
+    ROLES_CREATE = "roles.create",
+    ROLES_READ = "roles.read",
+    ROLES_UPDATE = "roles.update",
+    ROLES_DELETE = "roles.delete",
+    SESSIONS_READ = "sessions.read",
+    SESSIONS_DELETE = "sessions.delete",
+    USERS_CREATE = "users.create",
+    USERS_READ = "users.read",
+    USERS_UPDATE = "users.update",
+    USERS_DELETE = "users.delete",
+}
+
+export const Permissions = (...perms: PermissionsFlags[]) => SetMetadata("PERMISSIONS_KEY", perms);
