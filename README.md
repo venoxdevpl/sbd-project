@@ -14,7 +14,7 @@
 
 ## 3. Role i uprawnienia
 
-- [⌚] Lista ról użytkowników.
+- [ ] Lista ról użytkowników.
 - [ ] Opis uprawnień dla każdej roli.
 - [x] Implementacja kontroli dostępu.
 
@@ -50,7 +50,7 @@
 
 ### PS4 Pakiety _(nie dotyczy MySQL)_
 
-- [⌚] Ewentualne odwzorowanie w NestJS jako moduły.
+- [ ] Ewentualne odwzorowanie w NestJS jako moduły.
 
 ### PS5 Obsługa i propagacja wyjątków
 
@@ -63,7 +63,7 @@
 
 ## 8. Skrypt tworzący bazę danych / migracje
 
-- [ ] Plik SQL lub migracje TypeORM.
+- [x] Plik SQL lub migracje TypeORM.
 
 ## 9. Użycie ORM-u
 
@@ -73,7 +73,7 @@
 ## 10. API webowe
 
 - [x] Endpointy REST dla encji.
-- [⌚] Kontrolery i serwisy w NestJS.
+- [ ] Kontrolery i serwisy w NestJS.
 
 ## 11. Dobre praktyki
 
@@ -87,7 +87,7 @@
 ## 13. Uwierzytelnianie użytkowników
 
 - [x] JWT / sesje.
-- [ ] Logowanie i rejestracja.
+- [x] Logowanie i rejestracja.
 
 ## 14. Bezpieczeństwo
 
@@ -114,7 +114,7 @@
 ## 18. Indeksy
 
 - [x] Min. 2 indeksy.
-- [⌚] Opis zastosowania.
+- [ ] Opis zastosowania.
 
 ## 19. Przeformułowanie zapytań
 
