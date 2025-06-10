@@ -95,6 +95,7 @@
 - [x] Walidacja danych wejściowych.
 - [x] SQL Prepared Statement
 - [x] Sesja użytkownika weryfikowana na podstawie JWT z zapisem do bazy danych z możliwością uniważnienia.
+- [x] Mechanizm odświeżania JWT (access_token exp. 15m, refresh_token exp. 30m).
 
 ## 15. Duża ilość danych
 
