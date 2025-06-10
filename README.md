@@ -3,7 +3,7 @@
 ## 1. Wymagania funkcjonalne
 
 - [ ] Lista funkcji dostępnych dla użytkownika.
-- [ ] Opis operacji CRUD.
+- [x] Opis operacji CRUD.
 - [ ] Scenariusze użytkownika.
 
 ## 2. Wymagania niefunkcjonalne
@@ -14,14 +14,14 @@
 
 ## 3. Role i uprawnienia
 
-- [ ] Lista ról użytkowników.
-- [ ] Opis uprawnień dla każdej roli.
+- [x] Lista ról użytkowników.
+- [x] Opis uprawnień dla każdej roli.
 - [x] Implementacja kontroli dostępu.
 
 ## 4. Pozostałe elementy analizy aplikacji
 
-- [ ] Kontekst działania aplikacji.
-- [ ] Założenia technologiczne.
+- [x] Kontekst działania aplikacji.
+- [x] Założenia technologiczne.
 
 ## 5. Diagram encji (ERD)
 
@@ -30,7 +30,7 @@
 
 ## 6. Założenia dotyczące bazy danych
 
-- [ ] Normalizacja do 3NF.
+- [x] Normalizacja do 3NF.
 - [ ] Strategie indeksowania.
 
 ## 7. Przewidywane obiekty PL/SQL (MySQL odpowiedniki)
@@ -54,7 +54,7 @@
 
 ### PS5 Obsługa i propagacja wyjątków
 
-- [ ] Obsługa błędów SQL.
+- [x] Obsługa błędów SQL.
 - [x] Obsługa błędów w kodzie NestJS.
 
 ### PS6 Wyzwalacze
@@ -73,7 +73,7 @@
 ## 10. API webowe
 
 - [x] Endpointy REST dla encji.
-- [ ] Kontrolery i serwisy w NestJS.
+- [x] Kontrolery i serwisy w NestJS.
 
 ## 11. Dobre praktyki
 
@@ -100,7 +100,7 @@
 
 ## 15. Duża ilość danych
 
-- [ ] Skrypt ładujący przykładowe dane.
+- [x] Skrypt ładujący przykładowe dane.
 - [ ] Testy na większym zbiorze danych.
 
 ## 16. Analiza planów zapytań (przed optymalizacją)
@@ -120,7 +120,7 @@
 
 ## 19. Przeformułowanie zapytań
 
-- [ ] Przed i po optymalizacji.
+- [x] Przed i po optymalizacji.
 
 ## 20. Prezentacja działania aplikacji
 
@@ -132,7 +132,7 @@
 
 ## 22. Paginacja
 
-- [ ] Implementacja w zapytaniach SQL i endpointach.
+- [x] Implementacja w zapytaniach SQL i endpointach.
 
 ## 23. Testy
 
