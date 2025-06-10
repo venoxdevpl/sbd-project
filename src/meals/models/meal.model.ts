@@ -1,9 +1,11 @@
 import { Allergen } from 'src/allergens/models/allergen.models';
+import { Category } from 'src/categories/model/category.model';
 import {
     Column,
     Entity,
     JoinTable,
     ManyToMany,
+    ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -16,6 +18,9 @@ export class Meal {
 
     @Column({ type: 'varchar', length: 64 })
     name: string;
+
+    @ManyToOne(() => Category, (c) => c.meals)
+    category: Category;
 
     @ManyToMany(() => Allergen)
     @JoinTable({ name: 'meals_allergens' })
