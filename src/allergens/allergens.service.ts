@@ -26,11 +26,17 @@ export class AllergensService {
     }
 
     public async findOne(id: number) {
-        return await this.allergensRepository.findOneOrFail({
+        const allergen = await this.allergensRepository.findOne({
             where: {
                 id,
             },
         });
+
+        if (!allergen) {
+            throw new NotFoundException("Allergen not found.");
+        }
+
+        return allergen;
     }
 
     public async update(id: number, data: UpdateAllergenDto) {
