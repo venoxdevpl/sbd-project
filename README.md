@@ -136,7 +136,7 @@
 ## 23. Testy
 
 - [ ] Testy integracyjne/E2E.
-- [ ] Połączenie z bazą testową.
+- [x] Połączenie z bazą testową.
 
 ## 24. Skrypt zasilający bazę danymi
 
