@@ -93,6 +93,7 @@
 
 - [ ] Haszowanie haseł.
 - [ ] Walidacja danych wejściowych.
+- [ ] Sesja użytkownika weryfikowana na podstawie JWT z zapisem do bazy danych.
 
 ## 15. Duża ilość danych
 
@@ -141,5 +142,4 @@
 
 # Kroki przed i po testowaniu
 
--- nie dodawać indeksów do kolumn które często będą używane w WHERE.
---
+## -- nie dodawać indeksów do kolumn które często będą używane w WHERE.

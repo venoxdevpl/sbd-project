@@ -7,6 +7,8 @@ import { RolesModule } from './roles/roles.module';
 import { User } from './users/models/user.model';
 import { Permission } from './roles/models/Permissions';
 import { Role } from './roles/models/Role';
+import { SessionsModule } from './sessions/sessions.module';
+import { Session } from './sessions/models/Session';
 
 @Module({
     imports: [
@@ -18,11 +20,12 @@ import { Role } from './roles/models/Role';
             password: process.env.DB_PASS,
             database: process.env.DB_NAME,
             synchronize: true,
-            entities: [Permission, Role, User],
+            entities: [Permission, Role, User, Session],
         }),
         UsersModule,
         CompaniesModule,
         RolesModule,
+        SessionsModule,
     ],
 })
 export class AppModule {}

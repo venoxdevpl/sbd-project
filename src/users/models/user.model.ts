@@ -2,11 +2,13 @@ import {
     Column,
     Entity,
     JoinColumn,
+    OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Role } from 'src/roles/models/Role';
+import { Session } from 'src/sessions/models/Session';
 
 @Entity({
     name: 'users',
@@ -21,6 +23,9 @@ export class User {
     @OneToOne(() => Role)
     @JoinColumn({ name: 'role_id' })
     role: Role;
+
+    @OneToMany(() => Session, (session) => session.user)
+    sessions: Session[];
 
     @Column({ type: 'varchar', length: 32 })
     email: string;
