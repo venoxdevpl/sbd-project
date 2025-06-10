@@ -4,6 +4,7 @@ import { UsersService } from "../src/users/users.service";
 import { RolesService } from "./../src/roles/roles.service";
 import { AllergensService } from "./../src/allergens/allergens.service";
 import { CategoriesService } from "./../src/categories/categories.service";
+import { CompaniesService } from "./../src/companies/companies.service";
 
 async function bootstrap() {
     const app = await NestFactory.createApplicationContext(AppModule);
@@ -19,6 +20,9 @@ async function bootstrap() {
 
     const categories = app.get(CategoriesService);
     await categories.seeder();
+
+    const companies = app.get(CompaniesService);
+    await companies.seeder();
 
     await app.close();
 }

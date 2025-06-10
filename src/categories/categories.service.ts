@@ -10,7 +10,7 @@ import faker, { fakerPL } from "@faker-js/faker";
 export class CategoriesService {
     constructor(@InjectRepository(Category) private categoryRepository: Repository<Category>) {}
 
-    async create(data: CreateCategoryDto) {
+    public async create(data: CreateCategoryDto) {
         const category = new Category();
 
         category.name = data.name;
@@ -18,14 +18,14 @@ export class CategoriesService {
         return await this.categoryRepository.save(category);
     }
 
-    async findAll(query: { count: number; page: number }) {
+    public async findAll(query: { count: number; page: number }) {
         return await this.categoryRepository.findAndCount({
             take: query.count,
             skip: query.page,
         });
     }
 
-    async findOne(id: number) {
+    public async findOne(id: number) {
         const category = await this.categoryRepository.findOne({
             where: {
                 id,
@@ -39,7 +39,7 @@ export class CategoriesService {
         return category;
     }
 
-    async update(id: number, data: UpdateCategoryDto) {
+    public async update(id: number, data: UpdateCategoryDto) {
         const category = await this.findOne(id);
 
         category.name = data.name ?? category.name;
@@ -47,7 +47,7 @@ export class CategoriesService {
         return await this.categoryRepository.save(category);
     }
 
-    async remove(id: number) {
+    public async remove(id: number) {
         const category = await this.findOne(id);
 
         if (!category) {
@@ -57,7 +57,7 @@ export class CategoriesService {
         return await this.categoryRepository.remove(category);
     }
 
-    async seeder() {
+    public async seeder() {
         const fm = new faker.FoodModule(fakerPL);
         for (let i = 0; i < 10; i++) {
             const cat = new Category();

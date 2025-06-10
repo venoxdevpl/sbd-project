@@ -22,35 +22,35 @@ export class CategoriesController {
     @Post()
     @UseGuards(SessionGuard)
     @Permissions(PermissionsFlags.CATEGORIES_CREATE)
-    async create(@Body() createCategoryDto: CreateCategoryDto) {
+    public async create(@Body() createCategoryDto: CreateCategoryDto) {
         return await this.categoriesService.create(createCategoryDto);
     }
 
     @Get()
     @UseGuards(SessionGuard)
     @Permissions(PermissionsFlags.CATEGORIES_READ)
-    async findAll(@Query("count") count: number = 25, @Query("page") page: number = 0) {
+    public async findAll(@Query("count") count: number = 25, @Query("page") page: number = 0) {
         return await this.categoriesService.findAll({ count, page });
     }
 
     @Get(":id")
     @UseGuards(SessionGuard)
     @Permissions(PermissionsFlags.CATEGORIES_READ)
-    async findOne(@Param("id") id: number) {
+    public async findOne(@Param("id") id: number) {
         return await this.categoriesService.findOne(id);
     }
 
     @Patch(":id")
     @UseGuards(SessionGuard)
     @Permissions(PermissionsFlags.CATEGORIES_UPDATE)
-    async update(@Param("id") id: number, @Body() updateCategoryDto: UpdateCategoryDto) {
+    public async update(@Param("id") id: number, @Body() updateCategoryDto: UpdateCategoryDto) {
         return await this.categoriesService.update(id, updateCategoryDto);
     }
 
     @Delete(":id")
     @UseGuards(SessionGuard)
     @Permissions(PermissionsFlags.CATEGORIES_DELETE)
-    async remove(@Param("id") id: number) {
+    public async remove(@Param("id") id: number) {
         return await this.categoriesService.remove(id);
     }
 }
