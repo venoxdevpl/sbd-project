@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 23.88.65.9:3306
--- Generation Time: Cze 11, 2025 at 12:23 AM
+-- Generation Time: Cze 11, 2025 at 01:02 AM
 -- Wersja serwera: 11.4.5-MariaDB-deb12
 -- Wersja PHP: 8.2.27
 
@@ -21,42 +21,6 @@ SET time_zone = "+00:00";
 -- Baza danych: `db_111063`
 --
 
-DELIMITER $$
---
--- Procedury
---
-CREATE DEFINER=`db_111063`@`49.12.68.90` PROCEDURE `add_random_allergen_to_meal` (IN `mealId` INT)   BEGIN
-    DECLARE allergen_id INT;
-
-    -- losowa liczba: 0 lub 1
-    IF FLOOR(RAND() * 2) = 1 THEN
-        SELECT id INTO allergen_id
-        FROM allergens
-        ORDER BY RAND()
-        LIMIT 1;
-
-        INSERT INTO meals_allergens (mealsId, allergensId)
-        VALUES (mealId, allergen_id);
-    END IF;
-END$$
-
---
--- Functions
---
-CREATE DEFINER=`db_111063`@`49.12.68.90` FUNCTION `get_user_meal_count` (`user_id` INT) RETURNS INT(11) DETERMINISTIC READS SQL DATA BEGIN
-    DECLARE total_meals INT;
-
-    SELECT COUNT(oc.id)
-    INTO total_meals
-    FROM orders o
-    JOIN orders_contents oc ON o.id = oc.orderId
-    WHERE o.userId = user_id;
-
-    RETURN total_meals;
-END$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -69,23 +33,6 @@ CREATE TABLE `allergens` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Wyzwalacze `allergens`
---
-DELIMITER $$
-CREATE TRIGGER `ALLERGENS_insert_ts` BEFORE INSERT ON `allergens` FOR EACH ROW BEGIN
-	SET NEW.created_at = NOW();
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `ALLERGENS_update_ts` BEFORE UPDATE ON `allergens` FOR EACH ROW BEGIN
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -100,23 +47,6 @@ CREATE TABLE `categories` (
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Wyzwalacze `categories`
---
-DELIMITER $$
-CREATE TRIGGER `CATEGORIES_insert_ts` BEFORE INSERT ON `categories` FOR EACH ROW BEGIN
-    SET NEW.updated_at = NOW();
-	SET NEW.created_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `CATEGORIES_update_ts` BEFORE UPDATE ON `categories` FOR EACH ROW BEGIN
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -130,23 +60,6 @@ CREATE TABLE `companies` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Wyzwalacze `companies`
---
-DELIMITER $$
-CREATE TRIGGER `COMPANIES_insert_ts` BEFORE INSERT ON `companies` FOR EACH ROW BEGIN
-    SET NEW.updated_at = NOW();
-	SET NEW.created_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `COMPANIES_update_ts` BEFORE UPDATE ON `companies` FOR EACH ROW BEGIN
-	SET NEW.created_at = NOW();
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -174,29 +87,6 @@ CREATE TABLE `meals` (
   `name` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Wyzwalacze `meals`
---
-DELIMITER $$
-CREATE TRIGGER `MEALS_insert_ts` BEFORE INSERT ON `meals` FOR EACH ROW BEGIN
-	SET NEW.created_at = NOW();
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `MEALS_update_ts` BEFORE UPDATE ON `meals` FOR EACH ROW BEGIN
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `meals_after_insert` AFTER INSERT ON `meals` FOR EACH ROW BEGIN
-    CALL add_random_allergen_to_meal(NEW.id);
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -221,23 +111,6 @@ CREATE TABLE `orders` (
   `userId` int(11) DEFAULT NULL,
   `companyId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Wyzwalacze `orders`
---
-DELIMITER $$
-CREATE TRIGGER `ORDERS_insert_ts` BEFORE INSERT ON `orders` FOR EACH ROW BEGIN
-    SET NEW.created_at = NOW();
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `ORDERS_update_ts` BEFORE UPDATE ON `orders` FOR EACH ROW BEGIN
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -265,23 +138,6 @@ CREATE TABLE `permissions` (
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Wyzwalacze `permissions`
---
-DELIMITER $$
-CREATE TRIGGER `PERMISSIONS_insert_ts` BEFORE INSERT ON `permissions` FOR EACH ROW BEGIN
-	SET NEW.created_at = NOW();
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `PERMISSIONS_update_ts` BEFORE INSERT ON `permissions` FOR EACH ROW BEGIN
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -294,23 +150,6 @@ CREATE TABLE `roles` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Wyzwalacze `roles`
---
-DELIMITER $$
-CREATE TRIGGER `ROLES_insert_ts` BEFORE INSERT ON `roles` FOR EACH ROW BEGIN
-	SET NEW.created_at = NOW();
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `ROLES_update_ts` BEFORE UPDATE ON `roles` FOR EACH ROW BEGIN
-	SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -340,23 +179,6 @@ CREATE TABLE `sessions` (
   `invalided` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Wyzwalacze `sessions`
---
-DELIMITER $$
-CREATE TRIGGER `SESSIONS_insert_ts` BEFORE INSERT ON `sessions` FOR EACH ROW BEGIN
-    SET NEW.created_at = NOW();
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `SESSIONS_update_ts` BEFORE UPDATE ON `sessions` FOR EACH ROW BEGIN
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -372,23 +194,6 @@ CREATE TABLE `users` (
   `updated_at` datetime DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Wyzwalacze `users`
---
-DELIMITER $$
-CREATE TRIGGER `USERS_insert_ts` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
-	SET NEW.created_at = NOW();
-    SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `USERS_update_ts` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
-	SET NEW.updated_at = NOW();
-END
-$$
-DELIMITER ;
 
 --
 -- Indeksy dla zrzutów tabel
@@ -449,7 +254,8 @@ ALTER TABLE `orders`
 ALTER TABLE `orders_contents`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_385b67c889d3b40da084a479b81` (`orderId`),
-  ADD KEY `FK_89cf51f45d831bd047e320fe342` (`mealId`);
+  ADD KEY `FK_89cf51f45d831bd047e320fe342` (`mealId`),
+  ADD KEY `orderId` (`orderId`);
 
 --
 -- Indeksy dla tabeli `permissions`

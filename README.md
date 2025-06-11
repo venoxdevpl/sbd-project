@@ -9,7 +9,7 @@
 ## 2. Wymagania niefunkcjonalne
 
 - [x] Rozmiar początkowy bazy danych.
-- [ ] Zakładany przyrost danych.
+- [x] Zakładany przyrost danych.
 - [x] Wymagania dotyczące wydajności.
 
 ## 3. Role i uprawnienia
@@ -50,7 +50,7 @@
 
 ### PS4 Pakiety _(nie dotyczy MySQL)_
 
-- [-] Ewentualne odwzorowanie w NestJS jako moduły.
+- [ ] Ewentualne odwzorowanie w NestJS jako moduły.
 
 ### PS5 Obsługa i propagacja wyjątków
 
@@ -136,7 +136,7 @@
 
 ## 23. Testy
 
-- [-] Testy integracyjne/E2E.
+- [ ] Testy integracyjne/E2E.
 - [x] Połączenie z bazą testową.
 
 ## 24. Skrypt zasilający bazę danymi
