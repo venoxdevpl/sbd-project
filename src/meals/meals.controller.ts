@@ -1,34 +1,56 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MealsService } from './meals.service';
-import { CreateMealDto } from './dto/create-meal.dto';
-import { UpdateMealDto } from './dto/update-meal.dto';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Patch,
+    Param,
+    Delete,
+    UseGuards,
+    Query,
+} from "@nestjs/common";
+import { MealsService } from "./meals.service";
+import { CreateMealDto } from "./dto/create-meal.dto";
+import { UpdateMealDto } from "./dto/update-meal.dto";
+import { SessionGuard } from "./../sessions/session.guard";
+import { Permissions, PermissionsFlags } from "./../sessions/session.decorator";
 
-@Controller('meals')
+@Controller("meals")
 export class MealsController {
-  constructor(private readonly mealsService: MealsService) {}
+    constructor(private readonly mealsService: MealsService) {}
 
-  @Post()
-  create(@Body() createMealDto: CreateMealDto) {
-    return this.mealsService.create(createMealDto);
-  }
+    @Post()
+    @UseGuards(SessionGuard)
+    @Permissions(PermissionsFlags.MEALS_CREATE)
+    public async create(@Body() body: CreateMealDto) {
+        return this.mealsService.create(body);
+    }
 
-  @Get()
-  findAll() {
-    return this.mealsService.findAll();
-  }
+    @Get()
+    @UseGuards(SessionGuard)
+    @Permissions(PermissionsFlags.MEALS_READ)
+    public async findAll(@Query("count") count: number = 25, @Query("page") page: number = 0) {
+        return this.mealsService.findAll({ count, page });
+    }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mealsService.findOne(+id);
-  }
+    @Get(":id")
+    @UseGuards(SessionGuard)
+    @Permissions(PermissionsFlags.MEALS_READ)
+    public async findOne(@Param("id") id: number) {
+        return this.mealsService.findOne(id);
+    }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMealDto: UpdateMealDto) {
-    return this.mealsService.update(+id, updateMealDto);
-  }
+    @Patch(":id")
+    @UseGuards(SessionGuard)
+    @Permissions(PermissionsFlags.MEALS_UPDATE)
+    public async update(@Param("id") id: number, @Body() body: UpdateMealDto) {
+        return this.mealsService.update(id, body);
+    }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mealsService.remove(+id);
-  }
+    @Delete(":id")
+    @UseGuards(SessionGuard)
+    @Permissions(PermissionsFlags.MEALS_DELETE)
+    public async remove(@Param("id") id: number) {
+        return this.mealsService.remove(id);
+    }
 }

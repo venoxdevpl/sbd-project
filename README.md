@@ -31,22 +31,22 @@
 ## 6. Założenia dotyczące bazy danych
 
 - [x] Normalizacja do 3NF.
-- [ ] Strategie indeksowania.
+- [x] Strategie indeksowania.
 
 ## 7. Przewidywane obiekty PL/SQL (MySQL odpowiedniki)
 
-- [ ] Procedury
-- [ ] Funkcje
+- [x] Procedury
+- [x] Funkcje
 - [x] Wyzwalacze
 
 ### PS2 Kursory
 
-- [ ] Przykładowa procedura z kursorem.
+- [x] Przykładowa procedura z kursorem.
 
 ### PS3 Funkcje i procedury
 
-- [ ] Min. 1 funkcja.
-- [ ] Min. 1 procedura.
+- [x] Min. 1 funkcja.
+- [x] Min. 1 procedura.
 
 ### PS4 Pakiety _(nie dotyczy MySQL)_
 

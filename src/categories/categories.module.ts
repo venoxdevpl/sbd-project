@@ -9,5 +9,6 @@ import { SessionsModule } from "./../sessions/sessions.module";
     imports: [TypeOrmModule.forFeature([Category]), SessionsModule],
     controllers: [CategoriesController],
     providers: [CategoriesService],
+    exports: [CategoriesService],
 })
 export class CategoriesModule {}

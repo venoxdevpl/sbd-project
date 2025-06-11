@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 23.88.65.9:3306
--- Generation Time: Cze 10, 2025 at 04:01 PM
+-- Generation Time: Cze 11, 2025 at 12:23 AM
 -- Wersja serwera: 11.4.5-MariaDB-deb12
 -- Wersja PHP: 8.2.27
 
@@ -21,13 +21,48 @@ SET time_zone = "+00:00";
 -- Baza danych: `db_111063`
 --
 
+DELIMITER $$
+--
+-- Procedury
+--
+CREATE DEFINER=`db_111063`@`49.12.68.90` PROCEDURE `add_random_allergen_to_meal` (IN `mealId` INT)   BEGIN
+    DECLARE allergen_id INT;
+
+    -- losowa liczba: 0 lub 1
+    IF FLOOR(RAND() * 2) = 1 THEN
+        SELECT id INTO allergen_id
+        FROM allergens
+        ORDER BY RAND()
+        LIMIT 1;
+
+        INSERT INTO meals_allergens (mealsId, allergensId)
+        VALUES (mealId, allergen_id);
+    END IF;
+END$$
+
+--
+-- Functions
+--
+CREATE DEFINER=`db_111063`@`49.12.68.90` FUNCTION `get_user_meal_count` (`user_id` INT) RETURNS INT(11) DETERMINISTIC READS SQL DATA BEGIN
+    DECLARE total_meals INT;
+
+    SELECT COUNT(oc.id)
+    INTO total_meals
+    FROM orders o
+    JOIN orders_contents oc ON o.id = oc.orderId
+    WHERE o.userId = user_id;
+
+    RETURN total_meals;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
 -- Struktura tabeli dla tabeli `allergens`
 --
 
-DROP TABLE IF EXISTS `allergens`;
 CREATE TABLE `allergens` (
   `id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -38,7 +73,6 @@ CREATE TABLE `allergens` (
 --
 -- Wyzwalacze `allergens`
 --
-DROP TRIGGER IF EXISTS `ALLERGENS_insert_ts`;
 DELIMITER $$
 CREATE TRIGGER `ALLERGENS_insert_ts` BEFORE INSERT ON `allergens` FOR EACH ROW BEGIN
 	SET NEW.created_at = NOW();
@@ -46,7 +80,6 @@ CREATE TRIGGER `ALLERGENS_insert_ts` BEFORE INSERT ON `allergens` FOR EACH ROW B
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `ALLERGENS_update_ts`;
 DELIMITER $$
 CREATE TRIGGER `ALLERGENS_update_ts` BEFORE UPDATE ON `allergens` FOR EACH ROW BEGIN
     SET NEW.updated_at = NOW();
@@ -60,7 +93,6 @@ DELIMITER ;
 -- Struktura tabeli dla tabeli `categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -71,7 +103,6 @@ CREATE TABLE `categories` (
 --
 -- Wyzwalacze `categories`
 --
-DROP TRIGGER IF EXISTS `CATEGORIES_insert_ts`;
 DELIMITER $$
 CREATE TRIGGER `CATEGORIES_insert_ts` BEFORE INSERT ON `categories` FOR EACH ROW BEGIN
     SET NEW.updated_at = NOW();
@@ -79,7 +110,6 @@ CREATE TRIGGER `CATEGORIES_insert_ts` BEFORE INSERT ON `categories` FOR EACH ROW
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `CATEGORIES_update_ts`;
 DELIMITER $$
 CREATE TRIGGER `CATEGORIES_update_ts` BEFORE UPDATE ON `categories` FOR EACH ROW BEGIN
     SET NEW.updated_at = NOW();
@@ -93,7 +123,6 @@ DELIMITER ;
 -- Struktura tabeli dla tabeli `companies`
 --
 
-DROP TABLE IF EXISTS `companies`;
 CREATE TABLE `companies` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
@@ -105,7 +134,6 @@ CREATE TABLE `companies` (
 --
 -- Wyzwalacze `companies`
 --
-DROP TRIGGER IF EXISTS `COMPANIES_insert_ts`;
 DELIMITER $$
 CREATE TRIGGER `COMPANIES_insert_ts` BEFORE INSERT ON `companies` FOR EACH ROW BEGIN
     SET NEW.updated_at = NOW();
@@ -113,7 +141,6 @@ CREATE TRIGGER `COMPANIES_insert_ts` BEFORE INSERT ON `companies` FOR EACH ROW B
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `COMPANIES_update_ts`;
 DELIMITER $$
 CREATE TRIGGER `COMPANIES_update_ts` BEFORE UPDATE ON `companies` FOR EACH ROW BEGIN
 	SET NEW.created_at = NOW();
@@ -127,7 +154,6 @@ DELIMITER ;
 -- Struktura tabeli dla tabeli `companies_users`
 --
 
-DROP TABLE IF EXISTS `companies_users`;
 CREATE TABLE `companies_users` (
   `usersId` int(11) NOT NULL,
   `companiesId` int(11) NOT NULL
@@ -139,20 +165,18 @@ CREATE TABLE `companies_users` (
 -- Struktura tabeli dla tabeli `meals`
 --
 
-DROP TABLE IF EXISTS `meals`;
 CREATE TABLE `meals` (
   `id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
   `description` varchar(1024) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `categoryId` int(11) DEFAULT NULL
+  `categoryId` int(11) DEFAULT NULL,
+  `name` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Wyzwalacze `meals`
 --
-DROP TRIGGER IF EXISTS `MEALS_insert_ts`;
 DELIMITER $$
 CREATE TRIGGER `MEALS_insert_ts` BEFORE INSERT ON `meals` FOR EACH ROW BEGIN
 	SET NEW.created_at = NOW();
@@ -160,10 +184,15 @@ CREATE TRIGGER `MEALS_insert_ts` BEFORE INSERT ON `meals` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `MEALS_update_ts`;
 DELIMITER $$
 CREATE TRIGGER `MEALS_update_ts` BEFORE UPDATE ON `meals` FOR EACH ROW BEGIN
     SET NEW.updated_at = NOW();
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `meals_after_insert` AFTER INSERT ON `meals` FOR EACH ROW BEGIN
+    CALL add_random_allergen_to_meal(NEW.id);
 END
 $$
 DELIMITER ;
@@ -174,7 +203,6 @@ DELIMITER ;
 -- Struktura tabeli dla tabeli `meals_allergens`
 --
 
-DROP TABLE IF EXISTS `meals_allergens`;
 CREATE TABLE `meals_allergens` (
   `mealsId` int(11) NOT NULL,
   `allergensId` int(11) NOT NULL
@@ -186,7 +214,6 @@ CREATE TABLE `meals_allergens` (
 -- Struktura tabeli dla tabeli `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -198,7 +225,6 @@ CREATE TABLE `orders` (
 --
 -- Wyzwalacze `orders`
 --
-DROP TRIGGER IF EXISTS `ORDERS_insert_ts`;
 DELIMITER $$
 CREATE TRIGGER `ORDERS_insert_ts` BEFORE INSERT ON `orders` FOR EACH ROW BEGIN
     SET NEW.created_at = NOW();
@@ -206,7 +232,6 @@ CREATE TRIGGER `ORDERS_insert_ts` BEFORE INSERT ON `orders` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `ORDERS_update_ts`;
 DELIMITER $$
 CREATE TRIGGER `ORDERS_update_ts` BEFORE UPDATE ON `orders` FOR EACH ROW BEGIN
     SET NEW.updated_at = NOW();
@@ -220,7 +245,6 @@ DELIMITER ;
 -- Struktura tabeli dla tabeli `orders_contents`
 --
 
-DROP TABLE IF EXISTS `orders_contents`;
 CREATE TABLE `orders_contents` (
   `id` int(11) NOT NULL,
   `orderId` int(11) DEFAULT NULL,
@@ -233,7 +257,6 @@ CREATE TABLE `orders_contents` (
 -- Struktura tabeli dla tabeli `permissions`
 --
 
-DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
   `id` int(11) NOT NULL,
   `key` varchar(32) NOT NULL,
@@ -245,7 +268,6 @@ CREATE TABLE `permissions` (
 --
 -- Wyzwalacze `permissions`
 --
-DROP TRIGGER IF EXISTS `PERMISSIONS_insert_ts`;
 DELIMITER $$
 CREATE TRIGGER `PERMISSIONS_insert_ts` BEFORE INSERT ON `permissions` FOR EACH ROW BEGIN
 	SET NEW.created_at = NOW();
@@ -253,7 +275,6 @@ CREATE TRIGGER `PERMISSIONS_insert_ts` BEFORE INSERT ON `permissions` FOR EACH R
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `PERMISSIONS_update_ts`;
 DELIMITER $$
 CREATE TRIGGER `PERMISSIONS_update_ts` BEFORE INSERT ON `permissions` FOR EACH ROW BEGIN
     SET NEW.updated_at = NOW();
@@ -267,7 +288,6 @@ DELIMITER ;
 -- Struktura tabeli dla tabeli `roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -278,7 +298,6 @@ CREATE TABLE `roles` (
 --
 -- Wyzwalacze `roles`
 --
-DROP TRIGGER IF EXISTS `ROLES_insert_ts`;
 DELIMITER $$
 CREATE TRIGGER `ROLES_insert_ts` BEFORE INSERT ON `roles` FOR EACH ROW BEGIN
 	SET NEW.created_at = NOW();
@@ -286,7 +305,6 @@ CREATE TRIGGER `ROLES_insert_ts` BEFORE INSERT ON `roles` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `ROLES_update_ts`;
 DELIMITER $$
 CREATE TRIGGER `ROLES_update_ts` BEFORE UPDATE ON `roles` FOR EACH ROW BEGIN
 	SET NEW.updated_at = NOW();
@@ -300,7 +318,6 @@ DELIMITER ;
 -- Struktura tabeli dla tabeli `roles_permissions`
 --
 
-DROP TABLE IF EXISTS `roles_permissions`;
 CREATE TABLE `roles_permissions` (
   `rolesId` int(11) NOT NULL,
   `permissionsId` int(11) NOT NULL
@@ -312,7 +329,6 @@ CREATE TABLE `roles_permissions` (
 -- Struktura tabeli dla tabeli `sessions`
 --
 
-DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `id` varchar(36) NOT NULL,
   `lastActivity` int(11) NOT NULL,
@@ -327,7 +343,6 @@ CREATE TABLE `sessions` (
 --
 -- Wyzwalacze `sessions`
 --
-DROP TRIGGER IF EXISTS `SESSIONS_insert_ts`;
 DELIMITER $$
 CREATE TRIGGER `SESSIONS_insert_ts` BEFORE INSERT ON `sessions` FOR EACH ROW BEGIN
     SET NEW.created_at = NOW();
@@ -335,7 +350,6 @@ CREATE TRIGGER `SESSIONS_insert_ts` BEFORE INSERT ON `sessions` FOR EACH ROW BEG
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `SESSIONS_update_ts`;
 DELIMITER $$
 CREATE TRIGGER `SESSIONS_update_ts` BEFORE UPDATE ON `sessions` FOR EACH ROW BEGIN
     SET NEW.updated_at = NOW();
@@ -349,7 +363,6 @@ DELIMITER ;
 -- Struktura tabeli dla tabeli `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
@@ -363,7 +376,6 @@ CREATE TABLE `users` (
 --
 -- Wyzwalacze `users`
 --
-DROP TRIGGER IF EXISTS `USERS_insert_ts`;
 DELIMITER $$
 CREATE TRIGGER `USERS_insert_ts` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
 	SET NEW.created_at = NOW();
@@ -371,7 +383,6 @@ CREATE TRIGGER `USERS_insert_ts` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `USERS_update_ts`;
 DELIMITER $$
 CREATE TRIGGER `USERS_update_ts` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
 	SET NEW.updated_at = NOW();
