@@ -2,15 +2,15 @@
 
 ## 1. Wymagania funkcjonalne
 
-- [ ] Lista funkcji dostępnych dla użytkownika.
+- [x] Lista funkcji dostępnych dla użytkownika.
 - [x] Opis operacji CRUD.
-- [ ] Scenariusze użytkownika.
+- [x] Scenariusze użytkownika.
 
 ## 2. Wymagania niefunkcjonalne
 
-- [ ] Rozmiar początkowy bazy danych.
+- [x] Rozmiar początkowy bazy danych.
 - [ ] Zakładany przyrost danych.
-- [ ] Wymagania dotyczące wydajności.
+- [x] Wymagania dotyczące wydajności.
 
 ## 3. Role i uprawnienia
 
@@ -50,7 +50,7 @@
 
 ### PS4 Pakiety _(nie dotyczy MySQL)_
 
-- [ ] Ewentualne odwzorowanie w NestJS jako moduły.
+- [-] Ewentualne odwzorowanie w NestJS jako moduły.
 
 ### PS5 Obsługa i propagacja wyjątków
 
@@ -101,22 +101,22 @@
 ## 15. Duża ilość danych
 
 - [x] Skrypt ładujący przykładowe dane.
-- [ ] Testy na większym zbiorze danych.
+- [x] Testy na większym zbiorze danych.
 
 ## 16. Analiza planów zapytań (przed optymalizacją)
 
-- [ ] EXPLAIN SELECT.
-- [ ] Opis problemów.
+- [x] EXPLAIN SELECT.
+- [x] Opis problemów.
 
 ## 17. Analiza planów zapytań (po optymalizacji)
 
-- [ ] EXPLAIN SELECT.
-- [ ] Wnioski.
+- [x] EXPLAIN SELECT.
+- [x] Wnioski.
 
 ## 18. Indeksy
 
 - [x] Min. 2 indeksy.
-- [ ] Opis zastosowania.
+- [x] Opis zastosowania.
 
 ## 19. Przeformułowanie zapytań
 
@@ -136,7 +136,7 @@
 
 ## 23. Testy
 
-- [ ] Testy integracyjne/E2E.
+- [-] Testy integracyjne/E2E.
 - [x] Połączenie z bazą testową.
 
 ## 24. Skrypt zasilający bazę danymi
